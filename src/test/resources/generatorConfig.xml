@@ -1,0 +1,27 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="simple" targetRuntime="MyBatis3Simple">
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+        <commentGenerator >
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/mydb?useSSL=false" userId="mysqluser" password="mysqlpw"/>
+
+        <javaModelGenerator targetPackage="demo.model" targetProject="src/test/java"/>
+
+        <sqlMapGenerator targetPackage="mybatis.mappers" targetProject="src/test/resources"></sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="demo.dao" targetProject="src/test/java"/>
+
+        <table tableName="customer" />
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,83 @@
+version: '2.1'
+services:
+  apollo-configservice:
+    image: apolloconfig/apollo-configservice:${version}
+    environment:
+      - SERVER_PORT=18080
+      - SPRING_DATASOURCE_URL=jdbc:mysql://apollo-db:3306/ApolloConfigDB?characterEncoding=utf8
+      - SPRING_DATASOURCE_USERNAME=${mysql_username}
+      - SPRING_DATASOURCE_PASSWORD=${mysql_password}
+      - SPRING_CLOUD_INETUTILS_IGNORED_INTERFACES[0]=docker0
+      - SPRING_CLOUD_INETUTILS_IGNORED_INTERFACES[1]=veth.*
+      - EUREKA_INSTANCE_IP_ADDRESS=${host_ip}
+    ports:
+      - 18080:18080
+    volumes:
+      - /tmp/logs:/opt/logs
+    networks:
+      - apollo-net
+    depends_on:
+      - apollo-db
+  apollo-adminservice:
+    image: apolloconfig/apollo-adminservice:${version}
+    environment:
+      - SERVER_PORT=18090
+      - SPRING_DATASOURCE_URL=jdbc:mysql://apollo-db:3306/ApolloConfigDB?characterEncoding=utf8
+      - SPRING_DATASOURCE_USERNAME=${mysql_username}
+      - SPRING_DATASOURCE_PASSWORD=${mysql_password}
+      - SPRING_CLOUD_INETUTILS_IGNORED_INTERFACES[0]=docker0
+      - SPRING_CLOUD_INETUTILS_IGNORED_INTERFACES[1]=veth.*
+      - EUREKA_INSTANCE_IP_ADDRESS=${host_ip}
+    ports:
+      - 18090:18090
+    volumes:
+      - /tmp/logs:/opt/logs
+    networks:
+      - apollo-net
+    depends_on:
+      - apollo-db
+      - apollo-configservice
+  apollo-portal:
+    image: apolloconfig/apollo-portal:${version}
+    environment:
+      - SERVER_PORT=18070
+      - SPRING_DATASOURCE_URL=jdbc:mysql://apollo-db:3306/ApolloPortalDB?characterEncoding=utf8
+      - SPRING_DATASOURCE_USERNAME=${mysql_username}
+      - SPRING_DATASOURCE_PASSWORD=${mysql_password}
+      - SPRING_CLOUD_INETUTILS_IGNORED_INTERFACES[0]=docker0
+      - SPRING_CLOUD_INETUTILS_IGNORED_INTERFACES[1]=veth.*
+      - EUREKA_INSTANCE_IP_ADDRESS=${host_ip}
+    ports:
+      - 18070:18070
+    volumes:
+      - /tmp/logs:/opt/logs
+    networks:
+      - apollo-net
+    depends_on:
+      - apollo-db
+      - apollo-configservice
+      - apollo-adminservice
+  apollo-db:
+    image: mysql:8.0
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
+    depends_on:
+      - apollo-dbdata
+    ports:
+      - 13306:3306
+    networks:
+      - apollo-net
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    volumes_from:
+      - apollo-dbdata
+  apollo-dbdata:
+    image: alpine:latest
+    volumes:
+      - /var/lib/mysql
+    networks:
+      - apollo-net
+networks:
+  apollo-net:
+    driver: bridge

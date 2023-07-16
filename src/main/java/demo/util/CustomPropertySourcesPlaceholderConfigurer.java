@@ -28,10 +28,10 @@ public class CustomPropertySourcesPlaceholderConfigurer extends PropertySourcesP
 
                 if (ObjectUtils.nullSafeEquals(strVal, resolved)) {
                     // 占位符解析后处理
-                    resolved = CyberUtil.decrypt(resolved);
+                    resolved = CipherUtil.decrypt(resolved);
                 } else {
                     // 占位符解析前处理
-                    resolved = CyberUtil.decryptProperty(strVal, resolved);
+                    resolved = CipherUtil.decryptProperty(strVal, resolved);
                 }
                 return (resolved.equals(nullValue) ? null : resolved);
             }

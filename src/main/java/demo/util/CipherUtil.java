@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Locale;
 
-public class CyberUtil {
+public class CipherUtil {
     private static String keyStr = "1234567812345678";
 
     private static SecretKey key;

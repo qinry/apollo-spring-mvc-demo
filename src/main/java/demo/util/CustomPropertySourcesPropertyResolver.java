@@ -14,7 +14,7 @@ public class CustomPropertySourcesPropertyResolver extends PropertySourcesProper
         Object value = super.getProperty(key, targetValueType, resolveNestedPlaceholders);
         if (value != null) {
             if (value instanceof String) {
-                value = CyberUtil.decryptProperty(key, (String) value);
+                value = CipherUtil.decryptProperty(key, (String) value);
             }
         }
         return (T)value;
@@ -24,7 +24,7 @@ public class CustomPropertySourcesPropertyResolver extends PropertySourcesProper
     public String resolvePlaceholders(String text) {
         String value = super.resolvePlaceholders(text);
         if (value != null) {
-            value = CyberUtil.decryptProperty(text, (String) value);
+            value = CipherUtil.decryptProperty(text, (String) value);
         }
         return value;
     }
@@ -33,7 +33,7 @@ public class CustomPropertySourcesPropertyResolver extends PropertySourcesProper
     public String resolveRequiredPlaceholders(String text) throws IllegalArgumentException {
         String value = super.resolveRequiredPlaceholders(text);
         if (value != null) {
-            value = CyberUtil.decryptProperty(text, (String) value);
+            value = CipherUtil.decryptProperty(text, (String) value);
         }
         return value;
     }

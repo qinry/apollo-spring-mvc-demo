@@ -1,11 +1,8 @@
 package demo.util;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanDefinitionVisitor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.*;
@@ -14,7 +11,11 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringValueResolver;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 
 public class CustomPropertySourcesPlaceholderConfigurer extends PropertySourcesPlaceholderConfigurer {
 
@@ -110,6 +111,33 @@ public class CustomPropertySourcesPlaceholderConfigurer extends PropertySourcesP
 
         processProperties(beanFactory, propertyResolver);
         this.appliedPropertySources = this.propertySources;
+    }
+
+    protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess,
+                                     final ConfigurablePropertyResolver propertyResolver) throws BeansException {
+
+        propertyResolver.setPlaceholderPrefix(this.placeholderPrefix);
+        propertyResolver.setPlaceholderSuffix(this.placeholderSuffix);
+        propertyResolver.setValueSeparator(this.valueSeparator);
+
+        StringValueResolver valueResolver = new StringValueResolver() {
+            @Override
+            public String resolveStringValue(String strVal) {
+                String resolved = (ignoreUnresolvablePlaceholders ?
+                        propertyResolver.resolvePlaceholders(strVal) :
+                        propertyResolver.resolveRequiredPlaceholders(strVal));
+                if (trimValues) {
+                    resolved = resolved.trim();
+                }
+                String converted = CipherUtil.decrypt(strVal);
+                if (!ObjectUtils.nullSafeEquals(resolved, converted)) {
+                    resolved = converted;
+                }
+                return (resolved.equals(nullValue) ? null : resolved);
+            }
+        };
+
+        doProcessProperties(beanFactoryToProcess, valueResolver);
     }
 
     @Override

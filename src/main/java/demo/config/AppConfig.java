@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-//@EnableApolloConfig
-@PropertySource("classpath:application.properties")
+@EnableApolloConfig
+//@PropertySource("classpath:application.properties")
 public class AppConfig {
 
     @Bean

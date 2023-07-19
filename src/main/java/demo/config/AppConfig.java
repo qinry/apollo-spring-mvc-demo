@@ -4,9 +4,11 @@ import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import demo.util.CustomPropertySourcesPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@EnableApolloConfig
+//@EnableApolloConfig
+@PropertySource("classpath:application.properties")
 public class AppConfig {
 
     @Bean

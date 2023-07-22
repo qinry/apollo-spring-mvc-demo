@@ -12,8 +12,8 @@ public class CipherUtil {
 
     private static SecretKey key;
 
-    private static Cipher decryptCipher
-            ;
+    private static Cipher decryptCipher;
+
     private static Cipher encryptCipher;
 
     private static final String[] ENC_KEYS = { "password", "pwd", "secret" };

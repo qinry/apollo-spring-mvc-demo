@@ -1,42 +1,45 @@
 package demo.util;
 
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.PropertySourcesPropertyResolver;
+
 public class PropertyUtil {
 
-    private static CustomPropertySourcesPropertyResolver customPropertySourcesPropertyResolver
-            = new CustomPropertySourcesPropertyResolver(
-                    SpringUtil.getBean(CustomPropertySourcesPlaceholderConfigurer.class).getAppliedPropertySources());
+    private static PropertySourcesPropertyResolver propertySourcesPropertyResolver
+            = new PropertySourcesPropertyResolver(
+                    SpringUtil.getBean("propertySourcesPlaceholderConfigurer", PropertySourcesPlaceholderConfigurer.class).getAppliedPropertySources());
 
     public static String getProperty(String propertyName) {
-        return customPropertySourcesPropertyResolver.getProperty(propertyName);
+        return propertySourcesPropertyResolver.getProperty(propertyName);
     }
 
     public static String getProperty(String propertyName, String defaultValue) {
-        return customPropertySourcesPropertyResolver.getProperty(propertyName, defaultValue);
+        return propertySourcesPropertyResolver.getProperty(propertyName, defaultValue);
     }
 
     public static <T> T getProperty(String key, Class<T> targetType) {
-        return customPropertySourcesPropertyResolver.getProperty(key, targetType);
+        return propertySourcesPropertyResolver.getProperty(key, targetType);
 
     }
 
     public static <T> T getProperty(String key, Class<T> targetType, T defaultValue) {
-        return customPropertySourcesPropertyResolver.getProperty(key, targetType, defaultValue);
+        return propertySourcesPropertyResolver.getProperty(key, targetType, defaultValue);
 
     }
 
     public static String getRequiredProperty(String key) throws IllegalStateException {
-        return customPropertySourcesPropertyResolver.getRequiredProperty(key);
+        return propertySourcesPropertyResolver.getRequiredProperty(key);
     }
 
     public static <T> T getRequiredProperty(String key, Class<T> targetType) throws IllegalStateException {
-        return customPropertySourcesPropertyResolver.getRequiredProperty(key, targetType);
+        return propertySourcesPropertyResolver.getRequiredProperty(key, targetType);
     }
 
     public static String resolvePlaceholders(String text) {
-        return customPropertySourcesPropertyResolver.resolvePlaceholders(text);
+        return propertySourcesPropertyResolver.resolvePlaceholders(text);
     }
 
     public static String resolveRequiredPlaceholders(String text) throws IllegalArgumentException {
-        return customPropertySourcesPropertyResolver.resolveRequiredPlaceholders(text);
+        return propertySourcesPropertyResolver.resolveRequiredPlaceholders(text);
     }
 }

@@ -3,6 +3,7 @@ package demo.controller;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import demo.config.EncryptPropertySourceFactory;
 import demo.config.TestBean;
 import demo.model.Customer;
 import demo.service.CustomerService;
@@ -10,6 +11,7 @@ import demo.util.PropertyUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,13 +47,13 @@ public class CustomerController {
     }
 
     @RequestMapping("/testBean")
-    public TestBean testBean() {
+    public void testBean() {
         log.info("testBean:{}", gson.toJson(testBean));
         log.info("property:{}:{}", "timeout", PropertyUtil.getProperty("timeout"));
+        log.info("property:{}:{}", "timeout", PropertyUtil.resolvePlaceholders("${timeout:1}"));
         log.info("dataSource:password:{}", dataSource.getPassword());
         log.info("property:{}:{}", "jdbc.password", PropertyUtil.getProperty("jdbc.password"));
         log.info("@Value:{}:{}", "jdbc.password", password);
         log.info("Environment:{}:{}", "jdbc.password", environment.getProperty("jdbc.password"));
-        return testBean;
     }
 }

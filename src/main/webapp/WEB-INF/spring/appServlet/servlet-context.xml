@@ -14,7 +14,7 @@
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/views"
           p:suffix=".jsp" />
-    <bean id="contentNegotiotionManager"
+    <bean id="contentNegotiationManager"
           class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean"
           p:defaultContentType="application/json" />
 </beans>

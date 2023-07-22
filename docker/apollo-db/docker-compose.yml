@@ -1,0 +1,19 @@
+version: '2.1'
+services:
+  apollo-db:
+    image: mysql:8.0
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
+    depends_on:
+      - apollo-dbdata
+    ports:
+      - 13306:3306
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    volumes_from:
+      - apollo-dbdata
+  apollo-dbdata:
+    image: alpine:latest
+    volumes:
+      - /var/lib/mysql

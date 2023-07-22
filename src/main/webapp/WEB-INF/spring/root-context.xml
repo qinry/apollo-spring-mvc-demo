@@ -18,8 +18,7 @@
     <context:component-scan base-package="demo.util" />
     <aop:aspectj-autoproxy expose-proxy="true"/>
     <tx:annotation-driven />
-<!--    <context:property-placeholder location="classpath*:/application.properties" system-properties-mode="OVERRIDE"/>-->
-<!--    <apollo:config />-->
+
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
@@ -37,4 +36,6 @@
         <property name="basePackage" value="demo.dao" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
+    <bean id="gsonFactory" class="org.springframework.http.converter.json.GsonFactoryBean"
+          p:dateFormatPattern="yyyy-MM-dd HH:mm:ss"/>
 </beans>

@@ -8,13 +8,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-    <mvc:annotation-driven />
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean id="gsonHttpMessageConverter" class="org.springframework.http.converter.json.GsonHttpMessageConverter"
+                  p:gson-ref="gsonFactory"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <mvc:default-servlet-handler />
     <context:component-scan base-package="demo.controller" />
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/WEB-INF/views"
-          p:suffix=".jsp" />
-    <bean id="contentNegotiationManager"
-          class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean"
-          p:defaultContentType="application/json" />
+    <context:component-scan base-package="demo.exception.handler" />
+    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 </beans>

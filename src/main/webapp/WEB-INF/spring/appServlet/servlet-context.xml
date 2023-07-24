@@ -10,12 +10,12 @@
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
     <mvc:annotation-driven>
         <mvc:message-converters>
-            <bean id="gsonHttpMessageConverter" class="org.springframework.http.converter.json.GsonHttpMessageConverter"
-                  p:gson-ref="gsonFactory"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"
+                p:objectMapper-ref="objectMapper"/>
         </mvc:message-converters>
     </mvc:annotation-driven>
-    <mvc:default-servlet-handler />
     <context:component-scan base-package="demo.controller" />
     <context:component-scan base-package="demo.exception.handler" />
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+    <mvc:default-servlet-handler />
 </beans>

@@ -1,6 +1,7 @@
 package demo.service;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.dao.CustomerMapper;
 import demo.exception.BusinessException;
 import demo.exception.BusinessExceptionEnum;
@@ -20,7 +21,7 @@ public class CustomerService {
 
     private final CustomerMapper customerMapper;
 
-    private final Gson gson;
+    private final ObjectMapper objectMapper;
 
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Customer> findAll() {
@@ -28,7 +29,11 @@ public class CustomerService {
         if (CollectionUtils.isEmpty(customers)) {
             throw new BusinessException(BusinessExceptionEnum.CUSTOMER_NOT_FOUND);
         }
-        log.info("findAll:{}", gson.toJson(customers));
+        try {
+            log.info("findAll:{}", objectMapper.writeValueAsString(customers));
+        } catch (JsonProcessingException e) {
+            log.error("JsonProcessingException!", e);
+        }
         return customers;
     }
 }

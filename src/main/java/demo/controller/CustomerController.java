@@ -1,7 +1,8 @@
 package demo.controller;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.config.TestBean;
 import demo.model.Customer;
 import demo.service.CustomerService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -36,7 +38,7 @@ public class CustomerController {
 
     private final Environment environment;
 
-    private final Gson gson;
+    private final ObjectMapper objectMapper;
 
     @RequestMapping(value = "/", produces = APPLICATION_JSON_VALUE)
     public List<Customer> findAll() {
@@ -44,8 +46,9 @@ public class CustomerController {
     }
 
     @RequestMapping("/testBean")
-    public TestBean testBean() {
-        log.info("testBean:{}", gson.toJson(testBean));
+    public TestBean testBean() throws JsonProcessingException {
+        log.info("testBean:{}", objectMapper.writeValueAsString(testBean));
+        log.info("now:{}", objectMapper.writeValueAsString(new Date()));
         log.info("property:{}:{}", "timeout", PropertyUtil.getProperty("timeout"));
         log.info("property:{}:{}", "timeout", PropertyUtil.resolvePlaceholders("${timeout:1}"));
         log.info("dataSource:password:{}", dataSource.getPassword());

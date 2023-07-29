@@ -29,7 +29,6 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.5")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-joda:2.13.5")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.5")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.5")
     implementation("org.joda:joda-money:1.0.1")
     implementation("com.google.guava:guava:20.0")
     implementation("org.springframework:spring-web:4.3.30.RELEASE")

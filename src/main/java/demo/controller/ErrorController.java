@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/error")
 public class ErrorController {
 
-    @RequestMapping
+    @RequestMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<ResultVO<?>> error(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         String uri = (String)request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);

@@ -27,10 +27,10 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
         c:dataSource-ref="dataSource" />
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-        p:dataSource-ref="dataSource" p:configLocation="classpath:mybatis/mybatis-config.xml"
-        p:mapperLocations="classpath*:mybatis/mappers/**/*.xml" />
+        p:dataSource-ref="dataSource" p:configLocation="${mybatis.configLocation}"
+        p:mapperLocations="${mybatis.mapperLocations}" />
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
         p:basePackage="demo.dao" p:sqlSessionFactoryBeanName="sqlSessionFactory" />
     <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
-        p:simpleDateFormat="yyyy-MM-dd HH:mm:ss" p:timeZone="GMT+8" p:serializationInclusion="NON_NULL"/>
+        p:simpleDateFormat="yyyy-MM-dd HH:mm:ss" p:timeZone="GMT+8" p:serializationInclusion="NON_NULL" p:createXmlMapper="false"/>
 </beans>

@@ -1,12 +1,15 @@
 package demo.config;
 
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
+import com.ctrip.framework.foundation.Foundation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @EnableApolloConfig
+@Slf4j
 public class AppConfig {
 
     @Bean

@@ -342,7 +342,7 @@ VALUES
     ('consumer.token.salt', 'someSalt', 'consumer token salt'),
     ('admin.createPrivateNamespace.switch', 'true', '是否允许项目管理员创建私有namespace'),
     ('configView.memberOnly.envs', 'dev', '只对项目成员显示配置信息的环境列表，多个env以英文逗号分隔'),
-    ('apollo.portal.meta.servers', '{\"dev\":\"http://192.168.1.226:18080\"}', '各环境Meta Service列表');
+    ('apollo.portal.meta.servers', '{\"dev\":\"http://192.168.1.231:18080\"}', '各环境Meta Service列表');
 
 
 INSERT INTO `Users` (`Username`, `Password`, `UserDisplayName`, `Email`, `Enabled`)

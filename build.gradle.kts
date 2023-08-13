@@ -74,7 +74,7 @@ publishing {
 }
 val buildProfile: String? by project
 
-apply(from = "profile-${buildProfile ?: "default"}.gradle.kts")
+apply(from = "profile-${buildProfile ?: "test"}.gradle.kts")
 
 tasks {
     processResources {

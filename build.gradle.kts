@@ -42,7 +42,7 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-joda")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("org.joda:joda-money:1.0.1")
-    implementation("com.google.guava:guava")
+    implementation("com.google.guava:guava:20.0")
     implementation("org.springframework:spring-web")
     implementation("org.springframework:spring-webmvc")
     implementation("org.springframework:spring-context")
@@ -78,9 +78,9 @@ apply(from = "profile-${buildProfile ?: "test"}.gradle.kts")
 
 tasks {
     processResources {
-        filter(ReplaceTokens::class,
-                "tokens" to mapOf(
-                        "apollo.env" to project.extra["apollo.env"],
-                        "apollo.cluster" to project.extra["apollo.cluster"]))
+        filesMatching(listOf("**/*.properties", "**/*.yaml","**/*.yml")) {
+            filter(ReplaceTokens::class, "tokens" to
+                    project.properties.filterValues { it is String })
+        }
     }
 }
